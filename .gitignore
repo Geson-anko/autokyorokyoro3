@@ -1,3 +1,9 @@
+# my ignore
+data
+runs
+lightning_logs
+ErrormapLog
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
