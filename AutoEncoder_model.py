@@ -83,7 +83,7 @@ class AutoEncoder(pl.LightningModule):
             errormap = errormap.cpu().numpy()
 
             fig = plt.figure(figsize=(self.cols,data_len))
-            fig.subplots_adjust(wspace=0.01,hspace=0.01)
+            fig.subplots_adjust(wspace=0.1,hspace=0.01)
             for i in range(data_len):
                 real_im = data[i].permute(1,2,0).cpu().numpy()
                 out_im = output[i].permute(1,2,0).cpu().numpy()
@@ -117,8 +117,8 @@ class AutoEncoder(pl.LightningModule):
                 r,c = rows[i],cols[i]
                 for idx in [*range(self.my_hparams.view_point_num)][::-1]:
                     p = (r[idx],c[idx])
-                    ax2.text(*p,str(idx),fontsize=8,color='black',path_effects=self.effects)
-                    ax3.text(*p,str(idx),fontsize=8,color='black',path_effects=self.effects)
+                    ax2.text(*p,str(idx),fontsize=6,color='black',path_effects=self.effects)
+                    #ax3.text(*p,str(idx),fontsize=8,color='black',path_effects=self.effects)
                 
                 if i == 0:
                     ax0.set_title('input')
@@ -165,8 +165,8 @@ class AutoEncoder(pl.LightningModule):
         
         hm = heatmap.view(heatmap.size(0),-1)
         sortedidx = torch.argsort(hm,dim=1).flip(1)[:,:self.my_hparams.view_point_num]
-        rows = torch.div(sortedidx,self.height,rounding_mode='trunc').cpu().numpy()
-        cols = (sortedidx % self.height).cpu().numpy()
+        cols = torch.div(sortedidx,self.height,rounding_mode='trunc').cpu().numpy()
+        rows = (sortedidx % self.height).cpu().numpy()
         return rows,cols
 
         
@@ -174,7 +174,7 @@ class AutoEncoder(pl.LightningModule):
 
 if __name__ == '__main__':
     model = AutoEncoder(hparams)
-    model.summary(True)
+    model.summary(False)
     dummy = torch.randn(model.input_size)
     print(model.error_heatmap(dummy).shape)
     """

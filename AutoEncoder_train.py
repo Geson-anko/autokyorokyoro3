@@ -25,7 +25,7 @@ if __name__ == '__main__':
 # %% 
 if __name__ == '__main__':
     EPOCHS = 1000
-    batch_size = 512
+    batch_size = 1024
     hparams.batch_size = batch_size
     model = AutoEncoder(hparams)
     data_loader = DataUtil.DataLoader(data_set,batch_size,shuffle=True,num_workers=0,pin_memory=True,drop_last=True)
