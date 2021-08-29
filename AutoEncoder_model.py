@@ -164,7 +164,7 @@ class AutoEncoder(pl.LightningModule):
         assert heatmap.size(2) == self.width
         
         hm = heatmap.view(heatmap.size(0),-1)
-        sortedidx = torch.argsort(hm,dim=1).flip(1)[:self.my_hparams.view_point_num]
+        sortedidx = torch.argsort(hm,dim=1).flip(1)[:,:self.my_hparams.view_point_num]
         rows = torch.div(sortedidx,self.height,rounding_mode='trunc').cpu().numpy()
         cols = (sortedidx % self.height).cpu().numpy()
         return rows,cols

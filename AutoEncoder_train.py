@@ -21,11 +21,11 @@ class Linnaeus5(DataUtil.Dataset):
     def __getitem__(self, index) -> torch.Tensor:
         return torchvision.io.read_image(self.files[index])
 if __name__ == '__main__':
-    data_set = Linnaeus5(512)
+    data_set = Linnaeus5(8000)
 # %% 
 if __name__ == '__main__':
-    EPOCHS = 10
-    batch_size = 64
+    EPOCHS = 1000
+    batch_size = 512
     hparams.batch_size = batch_size
     model = AutoEncoder(hparams)
     data_loader = DataUtil.DataLoader(data_set,batch_size,shuffle=True,num_workers=0,pin_memory=True,drop_last=True)

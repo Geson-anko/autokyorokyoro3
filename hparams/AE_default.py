@@ -1,6 +1,6 @@
 model_name:str = 'AutoEncoder'
 max_view_imgs:int = 8
-view_interval:int = 10
+view_interval:int = 1
 view_point_num:int = 5
 
 lr:float = 0.001
