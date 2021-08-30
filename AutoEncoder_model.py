@@ -116,7 +116,7 @@ class AutoEncoder(pl.LightningModule):
                 # insert error ranking
                 r,c = rows[i],cols[i]
                 for idx in [*range(self.my_hparams.view_point_num)][::-1]:
-                    p = (r[idx],c[idx])
+                    p = (c[idx],r[idx])
                     ax2.text(*p,str(idx),fontsize=6,color='black',path_effects=self.effects)
                     #ax3.text(*p,str(idx),fontsize=8,color='black',path_effects=self.effects)
                 
@@ -165,8 +165,8 @@ class AutoEncoder(pl.LightningModule):
         
         hm = heatmap.view(heatmap.size(0),-1)
         sortedidx = torch.argsort(hm,dim=1).flip(1)[:,:self.my_hparams.view_point_num]
-        cols = torch.div(sortedidx,self.height,rounding_mode='trunc').cpu().numpy()
-        rows = (sortedidx % self.height).cpu().numpy()
+        rows = torch.div(sortedidx,self.height,rounding_mode='trunc').cpu().numpy()
+        cols = (sortedidx % self.height).cpu().numpy()
         return rows,cols
 
         
