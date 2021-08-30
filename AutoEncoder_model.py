@@ -159,12 +159,13 @@ class AutoEncoder(pl.LightningModule):
     def preprocess(self,x:torch.Tensor) -> torch.Tensor:
         return (x/255).float()    
 
-    def _get_point(self,heatmap:torch.Tensor) -> tuple:
+    def _get_point(self,heatmap:torch.Tensor,num_point:int = None) -> tuple:
         assert heatmap.size(1) == self.height
         assert heatmap.size(2) == self.width
-        
+        if num_point is None:
+            num_point = self.my_hparams.view_point_num        
         hm = heatmap.view(heatmap.size(0),-1)
-        sortedidx = torch.argsort(hm,dim=1).flip(1)[:,:self.my_hparams.view_point_num]
+        sortedidx = torch.argsort(hm,dim=1).flip(1)[:,:num_point]
         rows = torch.div(sortedidx,self.height,rounding_mode='trunc').cpu().numpy()
         cols = (sortedidx % self.height).cpu().numpy()
         return rows,cols
